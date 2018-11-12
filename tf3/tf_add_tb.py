@@ -5,8 +5,8 @@ import tensorflow as tf
 
 a = tf.constant([1.0, 2.0], dtype=tf.float32, name = 'a')
 b = tf.constant([3.0, 4.0], dtype=tf.float32, name = 'b')
-
 c = a + b
+
 with tf.Session() as sess:
     with tf.name_scope("add"):
         tf.summary.histogram('c', c)
