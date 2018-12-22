@@ -13,7 +13,7 @@ ycap = [0]
 #number of training of examples
 num_examples = 1
 #step size
-h =.01
+h =0.01
 #forward-propogation
 y = tf.matmul(X, W)
 
@@ -55,5 +55,5 @@ with tf.Session() as sess:
     sess.run(tf.global_variables_initializer())
     yo = sess.run( tf.sigmoid(y) )
     loss = -tf.reduce_sum(tf.log(yo[range(num_examples),ycap]))
-    print('loss:',sess.run(loss) )     #outpus 7.63 (again for you it would be different!)
+    print('update loss:',sess.run(loss) )     #outpus 7.63 (again for you it would be different!)
 
