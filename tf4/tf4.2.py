@@ -43,8 +43,6 @@ df_wrt_b = df_wrt_d*dd_wrt_b
 a = a + h*df_wrt_a
 b = b + h*df_wrt_b
 c = c + h*df_wrt_c
-print(a)
-print(b)
 def bakcforward(a, b, c):
     d = add(a, b)
     return product(d, c)
