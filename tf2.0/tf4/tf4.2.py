@@ -1,25 +1,11 @@
 import tensorflow as tf
 import numpy as np
 
-def product(a, b): 
-    x = tf.placeholder(tf.float32, shape=[1])
-    y = tf.placeholder(tf.float32, shape=[1])
-    z = x * y
+def product(x, y): 
+    return x * y
 
-    with tf.Session() as sess:
-        sess.run(tf.global_variables_initializer())
-        c = sess.run(z, feed_dict={x:a, y:b})
-        return(c)
-
-def add(a, b): 
-    x = tf.placeholder(tf.float32, shape=[1])
-    y = tf.placeholder(tf.float32, shape=[1])
-    z = x + y 
-
-    with tf.Session() as sess:
-        sess.run(tf.global_variables_initializer())
-        c = sess.run(z, feed_dict={x:a, y:b})
-        return(c)
+def add(x, y): 
+    return (x + y) 
 
 def forward(a, b, c):
     d = add(a, b)

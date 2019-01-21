@@ -8,10 +8,6 @@ mpl.rcParams['axes.unicode_minus']=False
 fig = plt.figure(figsize=(6,4))
 ax = fig.add_subplot(111)
 
-def relu(x):
-    with tf.Session() as sess:
-        return sess.run(tf.nn.relu(x))
-
 x = np.arange(-10, 10)
 y = np.where(x<0,0,x)
 
