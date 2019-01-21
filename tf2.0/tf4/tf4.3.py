@@ -15,10 +15,9 @@ h = 0.01
 y = tf.matmul(X, W)
 
 y_o = tf.sigmoid( y )
-print('y_o:',y_o.numpy())
 #计算Loss
 loss = -tf.reduce_sum( tf.math.log( y_o.numpy()[ range(num_examples) ,ycap ] ) )
-print('loss:',loss)     #1.7505805 每次结果可能不一样，因为每次初始化权重是随机数
+print('loss:',loss.numpy())     #1.7505805 每次结果可能不一样，因为每次初始化权重是随机数
 
 #反向传播
 def active_sigmoid( x):
@@ -45,5 +44,5 @@ y = tf.matmul(X,W)
 
 yo = tf.sigmoid(y) 
 loss = -tf.reduce_sum(tf.math.log(yo.numpy()[range(num_examples),ycap]))
-print('update loss:',loss.numpy() )     #1.5896498 每次结果可能不一样，因为每次初始化权重是随机数
+print('update loss:',loss.numpy())     #1.5896498 每次结果可能不一样，因为每次初始化权重是随机数
 
