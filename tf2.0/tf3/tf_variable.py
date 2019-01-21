@@ -3,7 +3,7 @@
 
 import tensorflow as tf
 
-v1 = tf.Variable(initial_value = [[1.0,2.0], [3.0, 4.0]], dtype=tf.float32)
+v1 = tf.Variable(initial_value = [[1.0,2.0], [3.0, 4.0]], dtype=tf.float32, name = 'v1')
 v2 = tf.Variable(initial_value = tf.random.normal([2,2], stddev = 1, seed = 1), dtype=tf.float32, name = 'v2')
 v21 = tf.Variable(initial_value = tf.random.normal([2,3], stddev = 1, seed = 1), dtype=tf.float32, name = 'v2')
 weights = tf.Variable(initial_value = tf.random.normal([2,3], stddev = 2, seed = 1))
@@ -18,6 +18,7 @@ v4 = tf.Variable([2,3], dtype=tf.float32)
 original = [[[1,2,3],[4,5,6]],[[7,8,9],[10,11,12]]]
 z_like = tf.zeros_like(original)
 
+print(v1.name, '->', v1.read_value())
 print(v1.name, '->', v1)
 print(v2.name,'->', v2)
 print(v21.name,'->', v21)
