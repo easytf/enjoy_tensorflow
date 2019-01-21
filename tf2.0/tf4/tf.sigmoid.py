@@ -5,18 +5,10 @@ import numpy as np
 import matplotlib as mpl
 import matplotlib.pyplot as plt
 
-def sigmoid(x):
-    with tf.Session() as sess:
-        return sess.run(tf.sigmoid(x))
-
-def tanh(x):
-    with tf.Session() as sess:
-        return sess.run(tf.tanh(x))
-
 x = np.linspace(-10, 10)
-y = sigmoid(x)
-tanh = tanh(x)
-relu = relu(x)
+y = tf.sigmoid(x)
+tanh = tf.tanh(x)
+relu = tf.nn.relu(x)
 
 fig = plt.figure(figsize=(6,4))
 ax = fig.add_subplot(111)
@@ -37,8 +29,9 @@ ax.yaxis.set_ticks_position('left')
 ax.spines['left'].set_position(('data',0))
 ax.set_yticks([-1,-0.9,-0.7,-0.5,-0.3,-0.1,0.1,0.3,0.5,0.7,0.9,1])
  
-#plt.plot(2*x,tanh,label="Tanh", color = "blue")
+plt.plot(2*x,tanh,label="Tanh", color = "blue")
 plt.plot(x,y,label="Sigmoid",color = "red")
+plt.plot(x, relu,label="Relu",color = "green")
 plt.legend()
 plt.show()
 
