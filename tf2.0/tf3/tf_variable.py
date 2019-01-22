@@ -15,6 +15,10 @@ w1 = tf.Variable(initial_value = tf.random.normal([1,2], stddev = 1, seed = 1), 
 w2 = tf.Variable(initial_value = tf.zeros(1,2),  name = 'v3')
 v4 = tf.Variable([2,3], dtype=tf.float32)
 
+init = tf.ones_initializer()
+ones = tf.Variable(initial_value = init(shape=[2,3]))
+print('ones init:',ones.numpy())
+
 original = [[[1,2,3],[4,5,6]],[[7,8,9],[10,11,12]]]
 z_like = tf.zeros_like(original)
 

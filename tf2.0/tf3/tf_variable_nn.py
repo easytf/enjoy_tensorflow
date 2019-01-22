@@ -6,9 +6,11 @@ with tf.name_scope("get_variable"):
     #使用随机函数生成2×3维的张量，标准差是1,随机种子是1
     w1 = tf.Variable(initial_value = tf.random.normal([2,3], stddev = 1, seed = 1),  name = 'w1')
     #创建第二个变量，我们故意使用上一个变量的值
-    w2 = tf.Variable(initial_value = tf.zeros([2,3]),  name = 'w1')
+    zeros = tf.zeros_initializer()
+    w2 = tf.Variable(initial_value = zeros([2,3]),  name = 'w1')
     #创建第三个变量w3时，tensorflow发现w3不存在，便用initial_value初始化器创建新的变量
-    w3 = tf.Variable(initial_value = tf.ones([2,3]),  name = 'w3')
+    ones = tf.ones_initializer()
+    w3 = tf.Variable(initial_value = ones([2,3]),  name = 'w3')
 bias = tf.Variable(initial_value = tf.constant([[0.1, 0.2,0.3],[0.4,0.5,0.6]]))
 x = tf.constant([[0.3,0.5],[0.1,0.2]])
 
