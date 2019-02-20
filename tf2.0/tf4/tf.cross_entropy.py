@@ -2,6 +2,7 @@ import tensorflow as tf
 
 # calculate cross_entropy 
 def my_cross(y, y_):
+    #把模型向量转为概率
     ys = tf.nn.softmax(y)
     corss_entropy = -tf.reduce_sum(y_*tf.math.log(ys))
     
