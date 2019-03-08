@@ -23,5 +23,25 @@ print("final cross_entropy = ", cross_entropy.numpy())
 
 #一步到位，直接使用TensorFlow的交叉熵库函数
 cross_entropy = tf.reduce_sum(tf.nn.softmax_cross_entropy_with_logits(logits = y, labels = y_))
-print("library cross_entropy = ",cross_entropy.numpy())  
- 
+print("softmax cross_entropy = ",cross_entropy.numpy())  
+
+y_s = tf.constant(1)
+cross_entropy = tf.reduce_sum(tf.nn.sparse_softmax_cross_entropy_with_logits(logits = y, labels = y_s))
+print("sparse cross_entropy = ",cross_entropy.numpy())  
+
+y  = tf.constant([[1.0, 2.0, 3.0, 4.0],[1.0, 2.0, 4.0, 3.0],[1.0, 4.0, 3.0, 2.0]])
+y_ = tf.constant([3, 2,1])
+cross_entropy = tf.reduce_sum(tf.nn.sparse_softmax_cross_entropy_with_logits(logits = y, labels = tf.argmax(y, 1)))
+cross_entropy = tf.reduce_sum(tf.nn.sparse_softmax_cross_entropy_with_logits(logits = y, labels = y_))
+print("sparse cross_entropy = ",cross_entropy)  
+print(tf.argmax(y, 1))
+
+#####for tf.nn.sigmoid_cross_entropy_with_logits
+#初步训练后模型最后一层的向量
+y  = tf.Variable([1.5,3.0,2.5])
+#真实值，实际的概率
+y_ = tf.constant([0.0, 1.0, 1.0])  
+cross_entropy = tf.reduce_sum(tf.nn.sigmoid_cross_entropy_with_logits(logits = y, labels = y_))
+print("sigmoid cross_entropy = ",cross_entropy.numpy())  
+
+
