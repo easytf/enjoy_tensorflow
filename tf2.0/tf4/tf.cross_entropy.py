@@ -45,3 +45,16 @@ cross_entropy = tf.reduce_sum(tf.nn.sigmoid_cross_entropy_with_logits(logits = y
 print("sigmoid cross_entropy = ",cross_entropy.numpy())  
 
 
+#tf.nn.weighted_cross_entropy_with_logits
+input_data = tf.Variable(tf.random.normal([3, 3]), dtype=tf.float32)
+# np.random.rand()传入一个shape,返回一个在[0,1)区间符合均匀分布的array
+
+output = tf.nn.weighted_cross_entropy_with_logits(logits=input_data,
+                                                  targets=[[1.0, 0.0, 0.0], [0.0, 0.0, 1.0], [0.0, 0.0, 1.0]],
+                                                  pos_weight=2.0)
+print('weighted:',output.numpy())
+
+output = tf.nn.weighted_cross_entropy_with_logits(logits=y,
+                                                  targets=y_,
+                                                  pos_weight=2.0)
+print('weighted cross_entropy=',output.numpy())
