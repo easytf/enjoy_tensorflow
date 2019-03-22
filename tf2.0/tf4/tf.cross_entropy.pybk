@@ -1,0 +1,25 @@
+import tensorflow as tf  
+ 
+# calculate cross_entropy 
+y  = tf.constant([[1.0, 2.0, 3.0, 4.0],[1.0, 2.0, 3.0, 4.0],[1.0, 2.0, 3.0, 4.0]])  
+y_ = tf.constant([[0.0, 0.0, 0.0, 1.0],[0.0, 0.0, 0.0, 1.0],[0.0, 0.0, 0.0, 1.0]])  
+y  = tf.constant([0.2, 0.5, 0.3])  
+y_ = tf.constant([0.0, 1.0, 0.0 ])  
+ysoft = tf.nn.softmax(y)  
+cross_entropy = -tf.reduce_sum(y_*tf.math.log(ysoft))  
+cross_entropy = -tf.reduce_sum(y_*tf.math.log(y))  
+ 
+#do cross_entropy just one step  
+cross_entropy2=tf.reduce_sum(tf.nn.softmax_cross_entropy_with_logits(logits = y, labels = y_))
+ 
+cross_entropy_loss=tf.reduce_mean(tf.nn.softmax_cross_entropy_with_logits(logits = y, labels = y_))
+ 
+print("step1:softmax result=")  
+print(ysoft)  
+print("step2:cross_entropy result=")  
+print(cross_entropy)  
+print("Function(softmax_cross_entropy_with_logits) result=")  
+print(cross_entropy2)
+print("cross_entropy_loss result=")  
+print(cross_entropy_loss)
+
