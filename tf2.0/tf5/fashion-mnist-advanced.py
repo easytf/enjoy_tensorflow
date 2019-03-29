@@ -79,7 +79,7 @@ def train_step(image, label):
   train_loss(loss)
   train_accuracy(label, predictions)
 
-# Now test the model:
+#验证模型
 @tf.function
 def test_step(image, label):
   predictions = model(image)
@@ -88,7 +88,7 @@ def test_step(image, label):
   test_loss(t_loss)
   test_accuracy(label, predictions)
 
-# In[ ]:
+#训练模型次数
 EPOCHS = 5
 
 for epoch in range(EPOCHS):
