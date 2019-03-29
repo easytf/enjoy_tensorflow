@@ -1,27 +1,20 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-# ## Import the Fashion MNIST dataset
+#导入Fashion MNIST数据集 
+# 60,000图片用作训练集, 10,000张图片用作测试集.
 
-# This guide uses the [Fashion MNIST](https://github.com/zalandoresearch/fashion-mnist) dataset which contains 70,000 grayscale images in 10 categories. The images show individual articles of clothing at low resolution (28 by 28 pixels), as seen here:
-# Fashion MNIST is intended as a drop-in replacement for the classic [MNIST](http://yann.lecun.com/exdb/mnist/) dataset—often used as the "Hello, World" of machine learning programs for computer vision. The MNIST dataset contains images of handwritten digits (0, 1, 2, etc) in an identical format to the articles of clothing we'll use here.
-# This guide uses Fashion MNIST for variety, and because it's a slightly more challenging problem than regular MNIST. Both datasets are relatively small and are used to verify that an algorithm works as expected. They're good starting points to test and debug code. 
-# 
-# We will use 60,000 images to train the network and 10,000 images to evaluate how accurately the network learned to classify images. You can access the Fashion MNIST directly from TensorFlow, just import and load the data:
-
-# TensorFlow and tf.keras
-import tensorflow as tf
-from tensorflow import keras
-
-# Helper libraries
 import numpy as np
+import tensorflow as tf
+# TensorFlow and tf.keras
+from tensorflow import keras
 import matplotlib.pyplot as plt
 
 fashion_mnist = keras.datasets.fashion_mnist
+
+#从~/.keras/datasets/fashion-mnist/加载数据到numpy数组
 (train_images, train_labels), (test_images, test_labels) = fashion_mnist.load_data()
 
-# Loading the dataset returns four NumPy arrays:
-# 
 # * The `train_images` and `train_labels` arrays are the *training set*—the data the model uses to learn.
 # * The model is tested against the *test set*, the `test_images`, and `test_labels` arrays.
 # 
@@ -35,7 +28,7 @@ class_names = ['T-shirt/top', 'Trouser', 'Pullover', 'Dress', 'Coat',
 # ## Explore the data
 # Let's explore the format of the dataset before training the model. The following shows there are 60,000 images in the training set, with each image represented as 28 x 28 pixels:
 # In[5]:
-print(train_images.shape)
+print('train_images.shape:',train_images.shape)
 
 # Likewise, there are 60,000 labels in the training set:
 # In[6]:
@@ -60,8 +53,8 @@ plt.show()
 
 # We scale these values to a range of 0 to 1 before feeding to the neural network model. For this, we divide the values by 255. It's important that the *training set* and the *testing set* are preprocessed in the same way:
 # In[12]:
-train_images = train_images / 255.0
-test_images = test_images / 255.0
+#train_images = train_images / 255.0
+#test_images = test_images / 255.0
 
 # Display the first 25 images from the *training set* and display the class name below each image. Verify that the data is in the correct format and we're ready to build and train the network.
 
