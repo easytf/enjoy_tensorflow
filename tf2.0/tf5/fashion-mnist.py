@@ -21,7 +21,8 @@ fashion_mnist = keras.datasets.fashion_mnist
 # Each image is mapped to a single label. Since the *class names* are not included with the dataset, store them here to use later when plotting the images:
 # In[4]:
 
-#mnist是从0-9的10个数字，fashion是10种不同类型的服饰，也有包包
+#mnist是从0-9的10个数字，fashion是10种不同类型的服饰，也有包包,每种类型数组索引也就是
+#它在模型中的ID
 class_names = ['T-shirt/top', 'Trouser', 'Pullover', 'Dress', 'Coat', 
                'Sandal', 'Shirt', 'Sneaker', 'Bag', 'Ankle boot']
 
@@ -55,8 +56,8 @@ plt.show()
 
 # We scale these values to a range of 0 to 1 before feeding to the neural network model. For this, we divide the values by 255. It's important that the *training set* and the *testing set* are preprocessed in the same way:
 # In[12]:
-#train_images = train_images / 255.0
-#test_images = test_images / 255.0
+train_images = train_images / 255.0
+test_images = test_images / 255.0
 
 # Display the first 25 images from the *training set* and display the class name below each image. Verify that the data is in the correct format and we're ready to build and train the network.
 

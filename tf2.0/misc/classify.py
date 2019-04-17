@@ -17,8 +17,8 @@ n_hidden = 128
 n_classes = 10
 
 fashion_mnist = keras.datasets.fashion_mnist
-#(x_train, y_train), (x_test, y_test) = mnist.load_data()
-(x_train, y_train), (x_test, y_test) = fashion_mnist.load_data()
+(x_train, y_train), (x_test, y_test) = mnist.load_data()
+#(x_train, y_train), (x_test, y_test) = fashion_mnist.load_data()
 print('y_train:',y_train)
  
 x_train = x_train.reshape(-1, n_step, n_input)
