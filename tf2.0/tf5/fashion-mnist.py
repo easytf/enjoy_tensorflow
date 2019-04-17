@@ -21,16 +21,19 @@ fashion_mnist = keras.datasets.fashion_mnist
 # Each image is mapped to a single label. Since the *class names* are not included with the dataset, store them here to use later when plotting the images:
 # In[4]:
 
+#mnist是从0-9的10个数字，fashion是10种不同类型的服饰，也有包包
 class_names = ['T-shirt/top', 'Trouser', 'Pullover', 'Dress', 'Coat', 
                'Sandal', 'Shirt', 'Sneaker', 'Bag', 'Ankle boot']
 
 # ## Explore the data
 # Let's explore the format of the dataset before training the model. The following shows there are 60,000 images in the training set, with each image represented as 28 x 28 pixels:
 # In[5]:
+#打印下训练图片的维度
 print('train_images.shape:',train_images.shape)
 
 # Likewise, there are 60,000 labels in the training set:
 # In[6]:
+#打印tensorflow版本
 print(tf.__version__)
 print(len(train_labels))
 
@@ -76,6 +79,9 @@ plt.show()
 
 model = keras.Sequential([
     keras.layers.Flatten(input_shape=(28, 28)),
+    #keras.layers.Dense(512, activation='relu'),
+    #keras.layers.Dropout(0.2),
+    keras.layers.Dense(256, activation='relu'),
     keras.layers.Dense(128, activation='relu'),
     keras.layers.Dense(10, activation='softmax')
 ])
@@ -88,6 +94,8 @@ model = keras.Sequential([
 # * *Optimizer* —This is how the model is updated based on the data it sees and its loss function.
 # * *Metrics* —Used to monitor the training and testing steps. The following example uses *accuracy*, the fraction of the images that are correctly classified.
 
+optimizer = keras.optimizers.Nadam(lr=0.002, beta_1=0.9, beta_2=0.999, epsilon=None, schedule_decay=0.004)
+#model.compile(optimizer=optimizer, 
 model.compile(optimizer='adam', 
               loss='sparse_categorical_crossentropy',
               metrics=['accuracy'])
