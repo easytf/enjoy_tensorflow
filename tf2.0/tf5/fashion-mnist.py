@@ -14,53 +14,38 @@ fashion_mnist = keras.datasets.fashion_mnist
 #从~/.keras/datasets/fashion-mnist/加载数据到numpy数组
 (train_images, train_labels), (test_images, test_labels) = fashion_mnist.load_data()
 
-# * The `train_images` and `train_labels` arrays are the *training set*—the data the model uses to learn.
-# * The model is tested against the *test set*, the `test_images`, and `test_labels` arrays.
-# 
-# The images are 28x28 NumPy arrays, with pixel values ranging between 0 and 255. The *labels* are an array of integers, ranging from 0 to 9. These correspond to the *class* of clothing the image represents:
-# Each image is mapped to a single label. Since the *class names* are not included with the dataset, store them here to use later when plotting the images:
-# In[4]:
-
-#mnist是从0-9的10个数字，fashion是10种不同类型的服饰，也有包包,每种类型数组索引也就是
-#它在模型中的ID
+#mnist是从0-9的10个数字，fashion是10种不同类型的服饰，也有包包,每个物品在数组中索引也就是
+#它在模型中的标签，这样和mnist的标签完全一致;
 class_names = ['T-shirt/top', 'Trouser', 'Pullover', 'Dress', 'Coat', 
                'Sandal', 'Shirt', 'Sneaker', 'Bag', 'Ankle boot']
 
 # ## Explore the data
 # Let's explore the format of the dataset before training the model. The following shows there are 60,000 images in the training set, with each image represented as 28 x 28 pixels:
-# In[5]:
-#打印下训练图片的维度
-print('train_images.shape:',train_images.shape)
 
-# Likewise, there are 60,000 labels in the training set:
-# In[6]:
+#打印下训练图片的维度 60,000 images 28 x 28 = (60000, 28, 28)
+print('train_images.shape:',train_images.shape)
 #打印tensorflow版本
 print(tf.__version__)
-print(len(train_labels))
-
-# Each label is an integer between 0 and 9:
+#看下标签长啥样的 
 print('labels:',train_labels)
 
-# There are 10,000 images in the test set. Again, each image is represented as 28 x 28 pixels:
+#同样查看下测试数据信息
 print('test_images.shape:',test_images.shape)
-# And the test set contains 10,000 images labels:
-# In[10]:
 print('len(test_labels):',len(test_labels))
-# ## Preprocess the data
-# The data must be preprocessed before training the network. If you inspect the first image in the training set, you will see that the pixel values fall in the range of 0 to 255:
+
+#每张图片大小是28×28，读到numpy的数组也是28×28的二维数组,每个像素值0-255
+#显示第一张图片
 plt.figure()
 plt.imshow(train_images[0])
 plt.colorbar()
 plt.grid(False)
 plt.show()
 
-# We scale these values to a range of 0 to 1 before feeding to the neural network model. For this, we divide the values by 255. It's important that the *training set* and the *testing set* are preprocessed in the same way:
-# In[12]:
+#对每个像素进行归一化
 train_images = train_images / 255.0
 test_images = test_images / 255.0
 
-# Display the first 25 images from the *training set* and display the class name below each image. Verify that the data is in the correct format and we're ready to build and train the network.
-
+#显示前面25张图片和对应的标签
 plt.figure(figsize=(10,10))
 for i in range(25):
     plt.subplot(5,5,i+1)
@@ -71,19 +56,20 @@ for i in range(25):
     plt.xlabel(class_names[train_labels[i]])
 plt.show()
 
-# ## Build the model
-# Building the neural network requires configuring the layers of the model, then compiling the model.
-# ### Setup the layers
-# The basic building block of a neural network is the *layer*. Layers extract representations from the data fed into them. And, hopefully, these representations are more meaningful for the problem at hand.
-# Most of deep learning consists of chaining together simple layers. Most layers, like `tf.keras.layers.Dense`, have parameters that are learned during training.
-# In[14]:
-
+#搭建神经网络模型
+#这段就是符号定义模型
 model = keras.Sequential([
+    #把28×28的数组打平成一维数组
     keras.layers.Flatten(input_shape=(28, 28)),
     #keras.layers.Dense(512, activation='relu'),
     #keras.layers.Dropout(0.2),
+    #添加一层全连接神经网络层，有256个神经元结点
+    #激活函数是relu
     keras.layers.Dense(256, activation='relu'),
+    #再添加一层，有128个神经元结点
     keras.layers.Dense(128, activation='relu'),
+    #最后一层，有10个神经元结点
+    #激活函数用的是softmax,还记得我们前面讲过交叉熵损失函数吗？
     keras.layers.Dense(10, activation='softmax')
 ])
 
