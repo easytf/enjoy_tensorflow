@@ -70,30 +70,22 @@ model = keras.Sequential([
 model.compile(optimizer='adam', 
               loss='sparse_categorical_crossentropy',
               metrics=['accuracy'])
-# ## Train the model
-# Training the neural network model requires the following steps:
-# 1. Feed the training data to the model—in this example, the `train_images` and `train_labels` arrays.
-# 2. The model learns to associate images and labels.
-# 3. We ask the model to make predictions about a test set—in this example, the `test_images` array. We verify that the predictions match the labels from the `test_labels` array. 
-# To start training,  call the `model.fit` method—the model is "fit" to the training data:
-model.fit(train_images, train_labels, epochs=50)
-# As the model trains, the loss and accuracy metrics are displayed. This model reaches an accuracy of about 0.88 (or 88%) on the training data.
-# ## Evaluate accuracy
-# Next, compare how the model performs on the test dataset:
+#开始训练模型
+model.fit(train_images, train_labels, epochs=10)
+#用测试集验证模型的loss和accuracy
 test_loss, test_acc = model.evaluate(test_images, test_labels)
 print('\nTest accuracy:', test_acc)
-# It turns out, the accuracy on the test dataset is a little less than the accuracy on the training dataset. This gap between training accuracy and test accuracy is an example of *overfitting*. Overfitting is when a machine learning model performs worse on new data than on their training data. 
-# With the model trained, we can use it to make predictions about some images.
+
+#对测试数据集进行预测
 predictions = model.predict(test_images)
 
-# Here, the model has predicted the label for each image in the testing set. Let's take a look at the first prediction:
-predictions[0]
-# A prediction is an array of 10 numbers. These describe the "confidence" of the model that the image corresponds to each of the 10 different articles of clothing. We can see which label has the highest confidence value:
-np.argmax(predictions[0])
-
-# So the model is most confident that this image is an ankle boot, or `class_names[9]`. And we can check the test label to see this is correct:
-test_labels[0]
-# We can graph this to look at the full set of 10 channels
+# 打印第一个预测的结果数组
+print('predictions first:',predictions[0])
+#取数组中概率最大的一个
+print('predict label:', np.argmax(predictions[0]))
+#看下和实际标签是什么
+print('test label:', test_labels[0])
+#把实际的标签和推理的标签做对比，如果不一样，则显示红色，如果相同,则显示蓝色
 def plot_image(i, predictions_array, true_label, img):
   predictions_array, true_label, img = predictions_array[i], true_label[i], img[i]
   plt.grid(False)
@@ -125,7 +117,7 @@ def plot_value_array(i, predictions_array, true_label):
   thisplot[predicted_label].set_color('red')
   thisplot[true_label].set_color('blue')
 
-# Let's look at the 0th image, predictions, and prediction array. 
+#打印第一张图片看看效果如何 
 i = 0
 plt.figure(figsize=(6,3))
 plt.subplot(1,2,1)
@@ -134,18 +126,8 @@ plt.subplot(1,2,2)
 plot_value_array(i, predictions,  test_labels)
 plt.show()
 
-i = 12
-plt.figure(figsize=(6,3))
-plt.subplot(1,2,1)
-plot_image(i, predictions, test_labels, test_images)
-plt.subplot(1,2,2)
-plot_value_array(i, predictions,  test_labels)
-plt.show()
-
-# Let's plot several images with their predictions. Correct prediction labels are blue and incorrect prediction labels are red. The number gives the percent (out of 100) for the predicted label. Note that it can be wrong even when very confident. 
-
-# Plot the first X test images, their predicted label, and the true label
-# Color correct predictions in blue, incorrect predictions in red
+#打印15张图片，每个单元由测试图片，预测标签，实际标签组成
+#5行 3列
 num_rows = 5
 num_cols = 3
 num_images = num_rows*num_cols
