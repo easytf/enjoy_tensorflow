@@ -1,16 +1,12 @@
-#!/usr/bin/env python
 # coding: utf-8
-
 #导入Fashion MNIST数据集 
 # 60,000图片用作训练集, 10,000张图片用作测试集.
-
 import numpy as np
 import tensorflow as tf
 from tensorflow import keras
 import matplotlib.pyplot as plt
 
 fashion_mnist = keras.datasets.fashion_mnist
-
 #从~/.keras/datasets/fashion-mnist/加载数据到numpy数组
 (train_images, train_labels), (test_images, test_labels) = fashion_mnist.load_data()
 
@@ -19,9 +15,7 @@ fashion_mnist = keras.datasets.fashion_mnist
 class_names = ['T-shirt/top', 'Trouser', 'Pullover', 'Dress', 'Coat', 
                'Sandal', 'Shirt', 'Sneaker', 'Bag', 'Ankle boot']
 
-# ## Explore the data
-# Let's explore the format of the dataset before training the model. The following shows there are 60,000 images in the training set, with each image represented as 28 x 28 pixels:
-
+print(train_images[0])
 #打印下训练图片的维度 60,000 images 28 x 28 = (60000, 28, 28)
 print('train_images.shape:',train_images.shape)
 #打印tensorflow版本
@@ -61,8 +55,6 @@ plt.show()
 model = keras.Sequential([
     #把28×28的数组打平成一维数组
     keras.layers.Flatten(input_shape=(28, 28)),
-    #keras.layers.Dense(512, activation='relu'),
-    #keras.layers.Dropout(0.2),
     #添加一层全连接神经网络层，有256个神经元结点
     #激活函数是relu
     keras.layers.Dense(256, activation='relu'),
@@ -73,16 +65,8 @@ model = keras.Sequential([
     keras.layers.Dense(10, activation='softmax')
 ])
 
-# The first layer in this network, `tf.keras.layers.Flatten`, transforms the format of the images from a 2d-array (of 28 by 28 pixels), to a 1d-array of 28 * 28 = 784 pixels. Think of this layer as unstacking rows of pixels in the image and lining them up. This layer has no parameters to learn; it only reformats the data.
-# After the pixels are flattened, the network consists of a sequence of two `tf.keras.layers.Dense` layers. These are densely-connected, or fully-connected, neural layers. The first `Dense` layer has 128 nodes (or neurons). The second (and last) layer is a 10-node *softmax* layer—this returns an array of 10 probability scores that sum to 1. Each node contains a score that indicates the probability that the current image belongs to one of the 10 classes.
-# ### Compile the model
-# Before the model is ready for training, it needs a few more settings. These are added during the model's *compile* step:
-# * *Loss function* —This measures how accurate the model is during training. We want to minimize this function to "steer" the model in the right direction.
-# * *Optimizer* —This is how the model is updated based on the data it sees and its loss function.
-# * *Metrics* —Used to monitor the training and testing steps. The following example uses *accuracy*, the fraction of the images that are correctly classified.
-
-optimizer = keras.optimizers.Nadam(lr=0.002, beta_1=0.9, beta_2=0.999, epsilon=None, schedule_decay=0.004)
-#model.compile(optimizer=optimizer, 
+#optimizer:使用adam梯度下降优化器
+#loss:使用sparse损失函数
 model.compile(optimizer='adam', 
               loss='sparse_categorical_crossentropy',
               metrics=['accuracy'])
@@ -92,7 +76,7 @@ model.compile(optimizer='adam',
 # 2. The model learns to associate images and labels.
 # 3. We ask the model to make predictions about a test set—in this example, the `test_images` array. We verify that the predictions match the labels from the `test_labels` array. 
 # To start training,  call the `model.fit` method—the model is "fit" to the training data:
-model.fit(train_images, train_labels, epochs=5)
+model.fit(train_images, train_labels, epochs=50)
 # As the model trains, the loss and accuracy metrics are displayed. This model reaches an accuracy of about 0.88 (or 88%) on the training data.
 # ## Evaluate accuracy
 # Next, compare how the model performs on the test dataset:
@@ -196,3 +180,4 @@ _ = plt.xticks(range(10), class_names, rotation=45)
 np.argmax(predictions_single[0])
 
 # And, as before, the model predicts a label of 9.
+
