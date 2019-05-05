@@ -44,13 +44,15 @@ class MyModel(Model):
     self.d1 = Dense(256, activation='relu')
     self.d2 = Dense(128, activation='relu')
     self.d3 = Dense(10, activation='softmax')
+    #self.d1 = Dense(128, activation='relu')
+    #self.d2 = Dense(10, activation='softmax')
 
   def call(self, x):
     x = self.conv1(x)
     x = self.flatten(x)
     x = self.d1(x)
     x = self.d2(x)
-    return self.d2(x)
+    return self.d3(x)
   
 model = MyModel()
 
@@ -91,7 +93,7 @@ def test_step(image, label):
   test_accuracy(label, predictions)
 
 #训练模型次数
-EPOCHS = 5
+EPOCHS = 50
 
 for epoch in range(EPOCHS):
   for image, label in mnist_train:
