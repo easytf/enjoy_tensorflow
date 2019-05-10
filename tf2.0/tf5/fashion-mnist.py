@@ -5,8 +5,8 @@ import numpy as np
 import tensorflow as tf
 from tensorflow import keras
 #如果是远程ssh运行代码，请打开下面两行
-import matplotlib
-matplotlib.use('Agg')
+#import matplotlib
+#matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 
 fashion_mnist = keras.datasets.fashion_mnist
