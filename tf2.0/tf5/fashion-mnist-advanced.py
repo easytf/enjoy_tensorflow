@@ -93,7 +93,7 @@ def test_step(image, label):
   test_accuracy(label, predictions)
 
 #训练模型次数
-EPOCHS = 50
+EPOCHS = 500
 
 for epoch in range(EPOCHS):
   for image, label in mnist_train:

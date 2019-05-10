@@ -5,8 +5,8 @@ import numpy as np
 import tensorflow as tf
 from tensorflow import keras
 #如果是远程ssh运行代码，请打开下面两行
-#import matplotlib
-#matplotlib.use('Agg')
+import matplotlib
+matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 
 fashion_mnist = keras.datasets.fashion_mnist
@@ -74,7 +74,7 @@ model.compile(optimizer='adam',
               loss='sparse_categorical_crossentropy',
               metrics=['accuracy'])
 #开始训练模型
-model.fit(train_images, train_labels, epochs=10)
+model.fit(train_images, train_labels, epochs=500)
 #用测试集验证模型的loss和accuracy
 test_loss, test_acc = model.evaluate(test_images, test_labels)
 print('\nTest accuracy:', test_acc)
