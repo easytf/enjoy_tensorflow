@@ -4,8 +4,9 @@
 import numpy as np
 import tensorflow as tf
 from tensorflow import keras
-import matplotlib
-matplotlib.use('Agg')
+#如果是远程ssh运行代码，请打开下面两行
+#import matplotlib
+#matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 
 fashion_mnist = keras.datasets.fashion_mnist
@@ -73,7 +74,7 @@ model.compile(optimizer='adam',
               loss='sparse_categorical_crossentropy',
               metrics=['accuracy'])
 #开始训练模型
-model.fit(train_images, train_labels, epochs=500)
+model.fit(train_images, train_labels, epochs=10)
 #用测试集验证模型的loss和accuracy
 test_loss, test_acc = model.evaluate(test_images, test_labels)
 print('\nTest accuracy:', test_acc)
@@ -84,22 +85,28 @@ predictions = model.predict(test_images)
 # 打印第一个预测的结果数组
 print('predictions first:',predictions[0])
 #取数组中概率最大的一个
-print('predict label:', np.argmax(predictions[0]))
+print('predict label:', tf.argmax(predictions[0]))
 #看下和实际标签是什么
 print('test label:', test_labels[0])
 #把实际的标签和推理的标签做对比，如果不一样，则显示红色，如果相同,则显示蓝色
 def plot_image(i, predictions_array, true_label, img):
+  #设置显示方式
   predictions_array, true_label, img = predictions_array[i], true_label[i], img[i]
+  #关闭背景的网格线
   plt.grid(False)
+  #关闭x轴，y轴坐标刻度
   plt.xticks([])
   plt.yticks([])
   
   plt.imshow(img, cmap=plt.cm.binary)
-
-  predicted_label = np.argmax(predictions_array)
+  #predictions_array中概率值最大的即为标签
+  predicted_label = tf.argmax(predictions_array)
+  #判断预测标签和实际标签是否相等
   if predicted_label == true_label:
+    #预测和实际相符就显示蓝色
     color = 'blue'
   else:
+    #否则就显示红色
     color = 'red'
   
   plt.xlabel("{} {:2.0f}% ({})".format(class_names[predicted_label],
@@ -113,8 +120,9 @@ def plot_value_array(i, predictions_array, true_label):
   plt.xticks([])
   plt.yticks([])
   thisplot = plt.bar(range(10), predictions_array, color="#777777")
+  #设置y轴的范围
   plt.ylim([0, 1]) 
-  predicted_label = np.argmax(predictions_array)
+  predicted_label = tf.argmax(predictions_array)
  
   thisplot[predicted_label].set_color('red')
   thisplot[true_label].set_color('blue')
@@ -140,28 +148,4 @@ for i in range(num_images):
   plt.subplot(num_rows, 2*num_cols, 2*i+2)
   plot_value_array(i, predictions, test_labels)
 plt.show()
-
-# Finally, use the trained model to make a prediction about a single image. 
-# Grab an image from the test dataset
-img = test_images[0]
-print(img.shape)
-
-# `tf.keras` models are optimized to make predictions on a *batch*, or collection, of examples at once. So even though we're using a single image, we need to add it to a list:
-
-# Add the image to a batch where it's the only member.
-img = (np.expand_dims(img,0))
-print(img.shape)
-
-# Now predict the image:
-
-predictions_single = model.predict(img)
-print(predictions_single)
-
-plot_value_array(0, predictions_single, test_labels)
-_ = plt.xticks(range(10), class_names, rotation=45)
-
-# `model.predict` returns a list of lists, one for each image in the batch of data. Grab the predictions for our (only) image in the batch:
-np.argmax(predictions_single[0])
-
-# And, as before, the model predicts a label of 9.
 
