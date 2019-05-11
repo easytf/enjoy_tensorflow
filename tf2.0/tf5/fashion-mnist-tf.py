@@ -86,8 +86,6 @@ test_accuracy = tf.keras.metrics.SparseCategoricalAccuracy(name='test_accuracy')
 @tf.function
 def train_step(image, label):
   with tf.GradientTape() as tape:
-    #predictions = model.predict(image)
-    print(np.shape(image))
     image = tf.reshape(image, (-1, 28*28))
     predictions = model(image)
     print('predictions:',predictions)
