@@ -5,8 +5,8 @@ import numpy as np
 import tensorflow as tf
 from tensorflow import keras
 #如果是远程ssh运行代码，请打开下面两行
-#import matplotlib
-#matplotlib.use('Agg')
+import matplotlib
+matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 
 fashion_mnist = keras.datasets.fashion_mnist
@@ -86,12 +86,18 @@ test_accuracy = tf.keras.metrics.SparseCategoricalAccuracy(name='test_accuracy')
 @tf.function
 def train_step(image, label):
   with tf.GradientTape() as tape:
+    #predictions = model.predict(image)
+    print(np.shape(image))
+    image = tf.reshape(image, (-1, 28*28))
     predictions = model(image)
+    print('predictions:',predictions)
+    print('label:',label)
     loss = loss_object(label, predictions)
   gradients = tape.gradient(loss, model.trainable_variables)
   optimizer.apply_gradients(zip(gradients, model.trainable_variables))
   
   train_loss(loss)
+  print('loss:', loss)
   train_accuracy(label, predictions)
 
 #验证模型
@@ -104,7 +110,7 @@ def test_step(image, label):
   test_accuracy(label, predictions)
 
 #训练模型次数
-EPOCHS = 500
+EPOCHS = 5
 
 for epoch in range(EPOCHS):
   for image, label in zip(train_images,train_labels):

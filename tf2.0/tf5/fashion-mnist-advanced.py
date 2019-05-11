@@ -72,6 +72,8 @@ test_accuracy = tf.keras.metrics.SparseCategoricalAccuracy(name='test_accuracy')
 def train_step(image, label):
   with tf.GradientTape() as tape:
     predictions = model(image)
+    print('predictions:',predictions)
+    print('label:',label)
     loss = loss_object(label, predictions)
   gradients = tape.gradient(loss, model.trainable_variables)
   optimizer.apply_gradients(zip(gradients, model.trainable_variables))
