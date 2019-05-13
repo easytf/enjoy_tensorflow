@@ -83,7 +83,7 @@ test_loss = tf.keras.metrics.Mean(name='test_loss')
 test_accuracy = tf.keras.metrics.SparseCategoricalAccuracy(name='test_accuracy')
 
 #使用梯度带实现自动微分
-@tf.function
+#@tf.function
 def train_step(image, label):
   with tf.GradientTape() as tape:
     image = tf.reshape(image, (-1, 28*28))
