@@ -62,19 +62,22 @@ model = keras.Sequential([
     #激活函数是relu
     keras.layers.Dense(256, activation='relu'),
     #再添加一层，有128个神经元结点
-    keras.layers.Dense(128, activation='relu'),
+    keras.layers.Dense(128, activation='relu',kernel_regularizer=keras.regularizers.l2(0.0001)),
+    #keras.layers.Dense(128, activation='relu'),
     #最后一层，有10个神经元结点
     #激活函数用的是softmax,还记得我们前面讲过交叉熵损失函数吗？
     keras.layers.Dense(10, activation='softmax')
 ])
 
-#optimizer:使用adam梯度下降优化器
+#optimizer:使用Nadam梯度下降优化器
+#optimizer = keras.optimizers.Adam(lr=0.001, beta_1=0.9, beta_2=0.999, epsilon=None, decay=0.0, amsgrad=False)
+optimizer = keras.optimizers.Nadam(lr=0.001, beta_1=0.9, beta_2=0.999, epsilon=None, schedule_decay=0.004)
 #loss:使用sparse损失函数
-model.compile(optimizer='adam', 
+model.compile(optimizer=optimizer, 
               loss='sparse_categorical_crossentropy',
               metrics=['accuracy'])
 #开始训练模型
-model.fit(train_images, train_labels, epochs=500)
+model.fit(train_images, train_labels, epochs=50)
 #用测试集验证模型的loss和accuracy
 test_loss, test_acc = model.evaluate(test_images, test_labels)
 print('\nTest accuracy:', test_acc)
